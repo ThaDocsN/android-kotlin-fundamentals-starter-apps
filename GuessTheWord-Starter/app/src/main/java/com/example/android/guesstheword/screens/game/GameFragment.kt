@@ -55,39 +55,15 @@ class GameFragment : Fragment() {
         viewModel.score.observe(this, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
         })
-        viewModel.word.observe(this, Observer { newWord ->
-            binding.wordText.text = newWord
-        })
         viewModel.eventGameFinish.observe(this, Observer<Boolean> {hasFinished ->
             if (hasFinished)gameFinished()
         })
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEnd() }
+
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
 
         return binding.root
 
-    }
-
-    /**
-     * Resets the list of words and randomizes the order
-     */
-
-
-    /** Methods for buttons presses **/
-
-    private fun onSkip() {
-        viewModel.onSkip()
-
-    }
-
-    private fun onCorrect() {
-        viewModel.onCorrect()
-
-    }
-
-    private fun onEnd(){
-        gameFinished()
     }
 
     private fun gameFinished(){
